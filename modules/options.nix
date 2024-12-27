@@ -47,7 +47,7 @@ let
       };
 
       flatpakref = mkOption {
-        type = types.nullOr types.str;
+        type = types.nullOr (types.either types.str types.path);
         description = "The flakeref URI of the app to install. ";
         default = null;
       };

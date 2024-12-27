@@ -64,7 +64,8 @@ let
               if sha256 != null
               then { url = flatpakref; sha256 = sha256; }
               else { url = flatpakref; };
-            iniContent = builtins.readFile (builtins.fetchurl fetchurlArgs);
+            file = if lib.isPath flatpakref then flatpakref else builtins.fetchurl fetchurlArgs;
+            iniContent = builtins.readFile file;
             lines = builtins.split "\r?\n" iniContent;
             parsed = builtins.filter (line: line != null) (map (line: builtins.match "(.*)=(.*)" (builtins.toString line)) lines);
 
